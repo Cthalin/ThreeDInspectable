@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RotateObject : MonoBehaviour {
 
-    public float RotSpeed = 20;
+    public float RotSpeed = 10;
 
     void OnMouseDrag()
     {
