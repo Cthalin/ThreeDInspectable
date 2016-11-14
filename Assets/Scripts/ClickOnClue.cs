@@ -10,6 +10,7 @@ public class ClickOnClue : MonoBehaviour {
     public Text Position;
     private Vector3 _mousePos;
     private bool _sleep = true;
+    private bool _isClue = true;
 
     void Start()
     {
@@ -26,14 +27,18 @@ public class ClickOnClue : MonoBehaviour {
 
             if (Physics.Raycast(ray, out _hit, 1000f, layerMask))
             {
-                this.GetComponent<CluesUIScript>().UpdateScore();
+                if(_hit.collider.tag == "Clue")
+                {
+                    this.GetComponent<CluesUIScript>().UpdateScore();
 
-                Ring.SetActive(true);
-                Ring.transform.position = Input.mousePosition;
-                StopCoroutine(VanishRing(Ring));
-                StartCoroutine(VanishRing(Ring));
+                    Ring.SetActive(true);
+                    Ring.transform.position = Input.mousePosition;
+                    StopCoroutine(VanishRing(Ring));
+                    StartCoroutine(VanishRing(Ring));
 
-                _hit.collider.gameObject.SetActive(false);
+                    _hit.collider.gameObject.SetActive(false);
+                }
+                
             }
         }
 
