@@ -13,6 +13,8 @@ public class ClueSequence : MonoBehaviour {
     private bool _sleep = true;
     public GameObject[] Clues=new GameObject[5];
     private int _clueNo = 0;
+    public AudioSource Blip;
+    public AudioSource BleepNeg;
 
     void Start()
     {
@@ -50,11 +52,13 @@ public class ClueSequence : MonoBehaviour {
                     if(_hit.collider.name == Clues[_clueNo].name)
                     {
                         this.GetComponent<CluesUIScript>().UpdateScore();
+                        Blip.Play();
                         _clueNo++;
                         
                     }
                     else
                     {
+                        BleepNeg.Play();
                         _clueNo = 0;
                         GetComponent<CluesUIScript>().ResetScore();
                     }
