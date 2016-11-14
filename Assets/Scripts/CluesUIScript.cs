@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CluesUIScript : MonoBehaviour {
     public Text Points;
@@ -11,5 +12,13 @@ public class CluesUIScript : MonoBehaviour {
     {
         Score++;
         Points.text = Score+"/5";
+
+        if (Score >= 5) { StartCoroutine("Finished"); }
+    }
+
+    IEnumerator Finished()
+    {
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene(1);
     }
 }

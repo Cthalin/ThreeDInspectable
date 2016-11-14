@@ -6,6 +6,6 @@ public class StartButtonScript : MonoBehaviour {
 
     public void StartTheGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 }

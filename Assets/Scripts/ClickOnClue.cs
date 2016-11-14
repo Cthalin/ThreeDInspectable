@@ -10,7 +10,6 @@ public class ClickOnClue : MonoBehaviour {
     public Text Position;
     private Vector3 _mousePos;
     private bool _sleep = true;
-    private bool _isClue = true;
 
     void Start()
     {
