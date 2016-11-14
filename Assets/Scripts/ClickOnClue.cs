@@ -21,7 +21,7 @@ public class ClickOnClue : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) && _sleep == true)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Ring.SetActive(false);
+            if (Ring.activeInHierarchy == true) { Ring.SetActive(false); }
             _sleep = false;
 
             if (Physics.Raycast(ray, out _hit, 1000f, layerMask))
@@ -32,8 +32,6 @@ public class ClickOnClue : MonoBehaviour {
 
                     Ring.SetActive(true);
                     Ring.transform.position = Input.mousePosition;
-                    StopCoroutine(VanishRing(Ring));
-                    StartCoroutine(VanishRing(Ring));
 
                     _hit.collider.gameObject.SetActive(false);
                 }
@@ -47,11 +45,5 @@ public class ClickOnClue : MonoBehaviour {
         {
             if (_sleep == false) { _sleep = true; }
         }
-    }
-
-    IEnumerator VanishRing(GameObject Ring)
-    {
-        yield return new WaitForSeconds(2f);
-        if (Ring.activeInHierarchy == true) { Ring.SetActive(false); }
     }
 }
