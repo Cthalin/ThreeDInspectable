@@ -8,21 +8,15 @@ public class ClueSequence : MonoBehaviour {
     public GameObject Ring;
     private RaycastHit _hit;
     public Text Position;
+    public Text ClueNo;
     private Vector3 _mousePos;
     private bool _sleep = true;
     public GameObject[] Clues=new GameObject[5];
-    private bool[] _sequence = new bool[5];
     private int _clueNo = 0;
 
     void Start()
     {
         Ring.SetActive(false);
-        bool[] _sequence = { true, false, false, false, false};
-
-        for (int i=0; i<Clues.Length; i++)
-        {
-            if (_sequence[i]==false) { Clues[i].SetActive(false); }
-        }
     }
 
     void Update()
@@ -41,12 +35,10 @@ public class ClueSequence : MonoBehaviour {
             {
                 if(_hit.collider.tag == "Clue")
                 {
-                    this.GetComponent<CluesUIScript>().UpdateScore();
-
                     Ring.SetActive(true);
                     Ring.transform.position = Input.mousePosition;
 
-                    _hit.collider.gameObject.SetActive(false);
+                    //_hit.collider.gameObject.SetActive(false);
 
                     for (int i=0; i<Clues.Length; i++)
                     {
@@ -55,9 +47,20 @@ public class ClueSequence : MonoBehaviour {
                             GetComponent<CluePanelScript>().ActivateCluePanel(i);
                         }
                     }
-
-                    _clueNo++;
-                    if (_clueNo < Clues.Length) { Clues[_clueNo].SetActive(true); }
+                    if(_hit.collider.name == Clues[_clueNo].name)
+                    {
+                        this.GetComponent<CluesUIScript>().UpdateScore();
+                        _clueNo++;
+                        
+                    }
+                    else
+                    {
+                        _clueNo = 0;
+                        GetComponent<CluesUIScript>().ResetScore();
+                    }
+                    
+                    //if (_clueNo < Clues.Length) { Clues[_clueNo].SetActive(true); }
+                    ClueNo.text = "Clue #" + _clueNo;
                 }
                 
             }

@@ -16,6 +16,12 @@ public class CluesUIScript : MonoBehaviour {
         if (Score >= 5) { StartCoroutine("Finished"); }
     }
 
+    public void ResetScore()
+    {
+        Score = 0;
+        Points.text = Score + "/5";
+    }
+
     IEnumerator Finished()
     {
         yield return new WaitForSeconds(0.5f);
