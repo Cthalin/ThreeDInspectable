@@ -10,6 +10,7 @@ public class ClickOnClue : MonoBehaviour {
     public Text Position;
     private Vector3 _mousePos;
     private bool _sleep = true;
+    public GameObject[] Clues=new GameObject[5];
 
     void Start()
     {
@@ -22,6 +23,10 @@ public class ClickOnClue : MonoBehaviour {
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Ring.activeInHierarchy == true) { Ring.SetActive(false); }
+            for (int i=0; i<5; i++)
+            {
+                GetComponent<CluePanelScript>().DeactivateCluePanel(i); 
+            }
             _sleep = false;
 
             if (Physics.Raycast(ray, out _hit, 1000f, layerMask))
@@ -34,6 +39,16 @@ public class ClickOnClue : MonoBehaviour {
                     Ring.transform.position = Input.mousePosition;
 
                     _hit.collider.gameObject.SetActive(false);
+
+                    for (int i=0; i<Clues.Length; i++)
+                    {
+                        if (_hit.collider.name == Clues[i].name)
+                        {
+                            GetComponent<CluePanelScript>().ActivateCluePanel(i);
+                        }
+                        //break;
+                    }
+                    
                 }
                 
             }
