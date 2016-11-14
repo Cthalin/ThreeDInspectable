@@ -12,6 +12,7 @@ public class ClueSequence : MonoBehaviour {
     private bool _sleep = true;
     public GameObject[] Clues=new GameObject[5];
     private bool[] _sequence = new bool[5];
+    private int _clueNo = 0;
 
     void Start()
     {
@@ -20,7 +21,7 @@ public class ClueSequence : MonoBehaviour {
 
         for (int i=0; i<Clues.Length; i++)
         {
-            if (_sequence[i]) { Clues[i].SetActive(true); }
+            if (_sequence[i]==false) { Clues[i].SetActive(false); }
         }
     }
 
@@ -54,7 +55,9 @@ public class ClueSequence : MonoBehaviour {
                             GetComponent<CluePanelScript>().ActivateCluePanel(i);
                         }
                     }
-                    
+
+                    _clueNo++;
+                    if (_clueNo < Clues.Length) { Clues[_clueNo].SetActive(true); }
                 }
                 
             }
