@@ -5,7 +5,7 @@ public class CluePanelScript : MonoBehaviour {
 
     public GameObject[] Panels = new GameObject[5];
 
-	void Start () {
+	void Awake () {
         for (int i = 0; i<5; i++)
         {
             DeactivateCluePanel(i);

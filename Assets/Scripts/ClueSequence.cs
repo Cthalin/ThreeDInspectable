@@ -15,10 +15,15 @@ public class ClueSequence : MonoBehaviour {
     private int _clueNo = 0;
     public AudioSource Blip;
     public AudioSource BleepNeg;
+    private CluePanelScript CluePanelScript;
+    private CluesUIScript CluesUIScript;
 
     void Start()
     {
         Ring.SetActive(false);
+        CluePanelScript = GetComponent<CluePanelScript>();
+        CluesUIScript = GetComponent<CluesUIScript>();
+        CluePanelScript.ActivateCluePanel(0);
     }
 
     void Update()
@@ -27,10 +32,7 @@ public class ClueSequence : MonoBehaviour {
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Ring.activeInHierarchy == true) { Ring.SetActive(false); }
-            for (int i=0; i<5; i++)
-            {
-                GetComponent<CluePanelScript>().DeactivateCluePanel(i); 
-            }
+            
             _sleep = false;
 
             if (Physics.Raycast(ray, out _hit, 1000f, layerMask))
@@ -40,30 +42,34 @@ public class ClueSequence : MonoBehaviour {
                     Ring.SetActive(true);
                     Ring.transform.position = Input.mousePosition;
 
-                    //_hit.collider.gameObject.SetActive(false);
-
-                    for (int i=0; i<Clues.Length; i++)
-                    {
-                        if (_hit.collider.name == Clues[i].name)
-                        {
-                            GetComponent<CluePanelScript>().ActivateCluePanel(i);
-                        }
-                    }
+                    //for (int i=0; i<Clues.Length; i++)
+                    //{
+                    //    if (_hit.collider.name == Clues[i].name)
+                    //    {
+                    //        GetComponent<CluePanelScript>().ActivateCluePanel(i);
+                    //    }
+                    //}
                     if(_hit.collider.name == Clues[_clueNo].name)
                     {
-                        this.GetComponent<CluesUIScript>().UpdateScore();
+                        CluesUIScript.UpdateScore();
                         Blip.Play();
                         _clueNo++;
-                        
+                        if (_clueNo < Clues.Length) {
+                            CluePanelScript.ActivateCluePanel(_clueNo);
+                            CluePanelScript.DeactivateCluePanel(_clueNo - 1);
+                        }
                     }
                     else
                     {
                         BleepNeg.Play();
                         _clueNo = 0;
-                        GetComponent<CluesUIScript>().ResetScore();
+                        CluesUIScript.ResetScore();
+                        for (int i = 0; i < Clues.Length; i++)
+                        {
+                            CluePanelScript.DeactivateCluePanel(i);
+                        }
+                        CluePanelScript.ActivateCluePanel(_clueNo);
                     }
-                    
-                    //if (_clueNo < Clues.Length) { Clues[_clueNo].SetActive(true); }
                     ClueNo.text = "Clue #" + _clueNo;
                 }
                 
