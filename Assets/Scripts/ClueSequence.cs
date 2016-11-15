@@ -42,13 +42,6 @@ public class ClueSequence : MonoBehaviour {
                     Ring.SetActive(true);
                     Ring.transform.position = Input.mousePosition;
 
-                    //for (int i=0; i<Clues.Length; i++)
-                    //{
-                    //    if (_hit.collider.name == Clues[i].name)
-                    //    {
-                    //        GetComponent<CluePanelScript>().ActivateCluePanel(i);
-                    //    }
-                    //}
                     if(_hit.collider.name == Clues[_clueNo].name)
                     {
                         CluesUIScript.UpdateScore();
